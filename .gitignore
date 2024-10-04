@@ -9,9 +9,15 @@
 # testing
 /coverage
 
+# secrets
+/secrets
+
 # next.js
 /.next/
 /out/
+
+# images
+/public/images
 
 # production
 /build

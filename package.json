@@ -9,12 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@date-fns/utc": "^2.1.0",
     "@emotion/cache": "^11.13.1",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/icons-material": "^6.1.1",
     "@mui/material": "^6.1.1",
     "@mui/material-nextjs": "^6.1.1",
+    "date-fns": "^4.1.0",
+    "firebase": "^10.14.0",
+    "firebase-admin": "^12.6.0",
     "lodash": "^4.17.21",
     "next": "14.2.13",
     "react": "^18",

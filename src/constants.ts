@@ -1,4 +1,4 @@
-import type { RecipeListItem } from './types';
+import type { RecipeListItem } from './types/recipeListItem';
 
 export const FOOD_CATEGORIES = [
   {
