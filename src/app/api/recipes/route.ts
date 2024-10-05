@@ -2,12 +2,13 @@ import { db } from '@/db';
 import { RecipeListItem } from '@/types';
 import { NextResponse } from 'next/server';
 import { fsDataTypeConverter } from '@/utils';
-import { createRecord } from '@/utils/firestoreUtils';
+import { createRecord } from '@/utils/firestore-utils';
 import { firestoreDatesConverter } from '@/utils/date-utils';
+import { validatePayload } from '@/utils/validators';
 
-export async function GET(
-  req: Request
-): Promise<NextResponse<{ recipes: RecipeListItem[] }>> {
+export async function GET(): Promise<
+  NextResponse<{ recipes: RecipeListItem[] }>
+> {
   const recipesSnapshot = await db
     .collection('recipes')
     .withConverter(fsDataTypeConverter<RecipeListItem>())
@@ -23,15 +24,20 @@ export async function GET(
 }
 
 export async function POST(req: Request) {
-  const { name, ingredients, instructions } = await req.json();
-  const recipeDoc = await createRecord<RecipeListItem>('recipes', {
-    name,
-  });
+  const payload = await req.json();
+  const validatedPayload = validatePayload(RecipeListItem, payload);
 
-  //   const recipeDoc = await db.collection('recipes').add({
-  //     name,
-  //   });
+  if (!validatedPayload.success) {
+    return NextResponse.json(
+      { errors: validatedPayload.data },
+      { status: 400 }
+    );
+  }
 
-  console.log('recipeDoc', recipeDoc.id);
+  const recipeDoc = await createRecord<RecipeListItem>(
+    'recipes',
+    validatedPayload.data
+  );
+
   return NextResponse.json({ id: recipeDoc.id });
 }
