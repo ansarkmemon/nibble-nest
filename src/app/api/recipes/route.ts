@@ -1,8 +1,8 @@
 import { db } from '@/db';
-import { RecipeListItem } from '@/types';
+import { Recipe, RecipeListItem } from '@/types';
 import { NextResponse } from 'next/server';
 import { fsDataTypeConverter } from '@/utils';
-import { createRecord } from '@/utils/firestore-utils';
+import { createRecord, updateRecord } from '@/utils/firestore-utils';
 import { firestoreDatesConverter } from '@/utils/date-utils';
 import { validatePayload } from '@/utils/validators';
 
@@ -11,7 +11,7 @@ export async function GET(): Promise<
 > {
   const recipesSnapshot = await db
     .collection('recipes')
-    .withConverter(fsDataTypeConverter<RecipeListItem>())
+    .withConverter(fsDataTypeConverter<Recipe>())
     .withConverter(firestoreDatesConverter)
     .get();
 
@@ -19,13 +19,15 @@ export async function GET(): Promise<
     return NextResponse.json({ recipes: [] });
   }
 
-  const recipes = recipesSnapshot.docs.map((doc) => doc.data());
+  const recipes = recipesSnapshot.docs.map((doc) =>
+    RecipeListItem.parse(doc.data())
+  );
   return NextResponse.json({ recipes });
 }
 
 export async function POST(req: Request) {
   const payload = await req.json();
-  const validatedPayload = validatePayload(RecipeListItem, payload);
+  const validatedPayload = validatePayload(Recipe, payload);
 
   if (!validatedPayload.success) {
     return NextResponse.json(
@@ -34,7 +36,7 @@ export async function POST(req: Request) {
     );
   }
 
-  const recipeDoc = await createRecord<RecipeListItem>(
+  const recipeDoc = await createRecord<Recipe>(
     'recipes',
     validatedPayload.data
   );

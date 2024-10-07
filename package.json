@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@babel/runtime": "^7.25.7",
     "@date-fns/utc": "^2.1.0",
     "@emotion/cache": "^11.13.1",
     "@emotion/react": "^11.13.3",
@@ -16,6 +17,8 @@
     "@mui/icons-material": "^6.1.1",
     "@mui/material": "^6.1.1",
     "@mui/material-nextjs": "^6.1.1",
+    "csv-parse": "^5.5.6",
+    "csvtojson": "^2.0.10",
     "date-fns": "^4.1.0",
     "firebase": "^10.14.0",
     "firebase-admin": "^12.6.0",
@@ -23,9 +26,12 @@
     "next": "14.2.13",
     "react": "^18",
     "react-dom": "^18",
+    "react-instantsearch-dom": "^6.40.4",
     "react-slick": "^0.30.2",
     "slick-carousel": "^1.8.1",
     "swiper": "^11.1.14",
+    "typesense": "^1.8.2",
+    "typesense-instantsearch-adapter": "^2.8.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {

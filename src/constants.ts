@@ -57,25 +57,21 @@ export const RECIPES_LIST: RecipeListItem[] = [
   {
     name: 'Pasta Carbonara',
     image: '/images/recipes/recipe_pasta_carbonara.jpg',
-    slug: '/recipes/pasta-carbonara',
     category: ['Pasta', 'Dinner'],
   },
   {
     name: 'Crispy Chicken Caesar Wrap',
     image: '/images/recipes/recipe_chicken_caesar_wrap.jpg',
-    slug: '/recipes/chicken-caesar-wrap',
     category: ['Chicken', 'Dinner'],
   },
   {
     name: 'Pumpkin Pie French Toast',
     image: '/images/recipes/recipe_pumpkin_pie_french_toast.jpg',
-    slug: '/recipes/pumpkin-pie-french-toast',
     category: ['Breakfast'],
   },
   {
     name: 'Croissant Egg Boats',
     image: '/images/recipes/recipe_croissant_egg_boats.jpg',
-    slug: '/recipes/croissant-egg-boats',
     category: ['Breakfast'],
   },
 ];
