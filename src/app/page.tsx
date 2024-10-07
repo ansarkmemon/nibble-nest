@@ -1,8 +1,14 @@
 import { SlickSlider } from '@/components/Slider';
 import { MobileSwiper } from '@/components/Swiper';
+import { UserInfo } from '@/components/UserInfo';
 import { Box, TextField, Typography } from '@mui/material';
+import { getSession } from '@auth0/nextjs-auth0';
 
-export default function Home() {
+export default async function Home() {
+  // const session = await getSession();
+
+  // console.log(session?.user);
+
   return (
     <div>
       <Box sx={{ margin: '0 1rem' }}>
@@ -24,6 +30,7 @@ export default function Home() {
           }}
         >
           <Typography variant="h6">Categories</Typography>
+          <UserInfo />
           {/* <Typography variant="body2">See All</Typography> */}
         </Box>
         <MobileSwiper />
