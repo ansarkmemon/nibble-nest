@@ -1,14 +1,27 @@
 // TODO: Implement an endpoint to enable uploading a CSV file containing recipes
 
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import { Readable } from 'stream';
 import csv from 'csvtojson';
 import { db } from '@/db';
 import { UTCDate } from '@date-fns/utc';
 import { Recipe } from '@/types';
-import { get } from 'lodash';
+import { first, get } from 'lodash';
+import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0';
 
-export async function POST(req: Request, res: Response) {
+export const POST = withApiAuthRequired(async (req: NextRequest) => {
+  const session = await getSession();
+
+  if (!session?.user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  const userSnapshot = await db
+    .collection('users')
+    .where('auth0Id', '==', session.user.sub)
+    .get();
+  const userData = first(userSnapshot.docs)?.data();
+
   const formData = await req.formData();
   const file = formData.get('file') as File;
   if (!file) {
@@ -33,6 +46,11 @@ export async function POST(req: Request, res: Response) {
             recipe.name = get(json, 'title', '');
             recipe.ingredients = ingredients;
             recipe.category = get(json, 'category', ['Breakfast']);
+            recipe.authorId = userData?.id;
+            recipe.authorName =
+              get(userData, 'firstName', '') +
+              ' ' +
+              get(userData, 'lastName', '');
 
             const parsedRecipe = Recipe.parse(recipe);
             const id = db.collection('recipes').doc().id;
@@ -66,4 +84,4 @@ export async function POST(req: Request, res: Response) {
   }
 
   return NextResponse.json(response, { status });
-}
+});

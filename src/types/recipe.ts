@@ -17,6 +17,8 @@ export const Recipe = z.object({
   tags: z.array(z.string()).optional(),
   totalTime: z.string().optional(),
   video: z.string({ description: 'Video URL of the recipe' }).optional(),
+  authorId: z.string({ description: 'Author ID of the recipe' }).optional(),
+  authorName: z.string({ description: 'Author name of the recipe' }).optional(),
 });
 
 export type Recipe = z.infer<typeof Recipe>;
@@ -51,6 +53,11 @@ export const RecipeSchema = {
       name: 'createdAt',
       type: 'int64',
       sort: true,
+    },
+    {
+      name: 'authorId',
+      type: 'string',
+      optional: true,
     },
   ],
 };
