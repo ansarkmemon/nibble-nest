@@ -8,6 +8,7 @@ import { UTCDate } from '@date-fns/utc';
 import { Recipe } from '@/types';
 import { first, get } from 'lodash';
 import { getSession, withApiAuthRequired } from '@auth0/nextjs-auth0';
+import { searchClient } from '@/typesense';
 
 export const POST = withApiAuthRequired(async (req: NextRequest) => {
   const session = await getSession();
@@ -31,6 +32,7 @@ export const POST = withApiAuthRequired(async (req: NextRequest) => {
   const readableStream = Readable.fromWeb(file.stream() as any);
   const batch = db.batch();
   let response = {};
+  let records: Recipe[] = [];
   let status = 200;
 
   try {
@@ -47,6 +49,7 @@ export const POST = withApiAuthRequired(async (req: NextRequest) => {
             recipe.ingredients = ingredients;
             recipe.category = get(json, 'category', ['Breakfast']);
             recipe.authorId = userData?.id;
+            recipe.authorEmail = get(userData, 'email', '');
             recipe.authorName =
               get(userData, 'firstName', '') +
               ' ' +
@@ -55,10 +58,16 @@ export const POST = withApiAuthRequired(async (req: NextRequest) => {
             const parsedRecipe = Recipe.parse(recipe);
             const id = db.collection('recipes').doc().id;
             const docRef = db.collection('recipes').doc(id);
+            // Add to firestore batch
             batch.set(docRef, {
               ...parsedRecipe,
               id,
               createdAt: new UTCDate(),
+            });
+            records.push({
+              ...parsedRecipe,
+              id,
+              createdAt: Math.floor(new Date().getTime() / 1000),
             });
 
             resolve(json);
@@ -70,7 +79,10 @@ export const POST = withApiAuthRequired(async (req: NextRequest) => {
         },
         async () => {
           console.log('onComplete');
+          // Commit firestore batch
           await batch.commit();
+          // Import into Typesense
+          await searchClient.collections('recipes').documents().import(records);
           response = { message: 'Import successful' };
           status = 200;
         }

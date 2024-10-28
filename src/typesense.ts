@@ -6,21 +6,28 @@
  */
 
 // const Typesense = require('typesense');
+import Typesense from 'typesense';
+
 import TypesenseInstantSearchAdapter from 'typesense-instantsearch-adapter';
 export const typesenseInstantsearchAdapter = new TypesenseInstantSearchAdapter({
   server: {
-    apiKey: process.env.TYPESENSE_ADMIN_API_KEY as string, // Use the same you've defined in docker-compose
+    apiKey: 'xyz', // process.env.TYPESENSE_ADMIN_API_KEY as string, // Use the same you've defined in docker-compose
     nodes: [
       {
-        host: process.env.TYPESENSE_NODE as string,
-        port: 443,
-        protocol: 'https',
+        host: 'localhost', // process.env.TYPESENSE_NODE as string,
+        port: 8108,
+        protocol: 'http',
       },
     ],
   },
   additionalSearchParameters: {
     query_by: 'name',
   },
+});
+
+export const searchClient = new Typesense.Client({
+  nodes: [{ host: 'localhost', port: 8108, protocol: 'http' }],
+  apiKey: 'xyz',
 });
 
 // export const searchDb = new Typesense.Client({

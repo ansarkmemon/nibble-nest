@@ -14,7 +14,7 @@ export default function CategoryPage({
 
       <Box>
         {RECIPES_LIST.map((recipe) => (
-          <RecipeListItem key={recipe.slug} recipe={recipe} />
+          <RecipeListItem key={recipe.id} recipe={recipe} />
         ))}
       </Box>
     </Box>

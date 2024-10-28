@@ -3,6 +3,7 @@ import { MobileSwiper } from '@/components/Swiper';
 import { UserInfo } from '@/components/UserInfo';
 import { Box, TextField, Typography } from '@mui/material';
 import { getSession } from '@auth0/nextjs-auth0';
+import RecipesList from '@/components/RecipesList';
 
 export default async function Home() {
   // const session = await getSession();
@@ -34,6 +35,7 @@ export default async function Home() {
           {/* <Typography variant="body2">See All</Typography> */}
         </Box>
         <MobileSwiper />
+        <RecipesList />
       </Box>
     </div>
   );

@@ -1,9 +1,11 @@
 import { z } from 'zod';
+import { Recipe } from './recipe';
 
-export const RecipeListItem = z.object({
-  name: z.string(),
-  image: z.string().optional(),
-  category: z.array(z.string(), { required_error: 'Category is required' }),
+export const RecipeListItem = Recipe.pick({
+  id: true,
+  name: true,
+  image: true,
+  category: true,
 });
 
-export type RecipeListItem = z.infer<typeof RecipeListItem>;
+export type RecipeListItemType = z.infer<typeof RecipeListItem>;

@@ -1,8 +1,15 @@
-export default function RecipeDetailPage({
+export default async function RecipeDetailPage({
   params,
 }: {
   params: { recipeId: string };
 }) {
-  console.log(params);
-  return <div>Recipe</div>;
+  let data = await fetch(
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/recipes/${params.recipeId}`
+  );
+  let recipe = await data.json();
+  return (
+    <div>
+      <pre>{JSON.stringify(recipe, null, 2)}</pre>
+    </div>
+  );
 }

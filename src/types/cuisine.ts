@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const CuisineEnum = z.enum([
+export const CUISINE_TYPES = [
   'Italian',
   'French',
   'American',
@@ -17,6 +17,8 @@ export const CuisineEnum = z.enum([
   'Mexican',
   'Thai',
   'Vietnamese',
-]);
+] as const;
+
+export const CuisineEnum = z.enum(CUISINE_TYPES);
 
 export type CuisineEnum = z.infer<typeof CuisineEnum>;

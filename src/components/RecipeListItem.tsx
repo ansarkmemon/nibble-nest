@@ -2,16 +2,20 @@
 
 import { Typography, CardContent, Card, Box } from '@mui/material';
 import Image from 'next/image';
-import type { RecipeListItem } from '@/types';
+import type { RecipeListItemType } from '@/types';
 import { useRouter } from 'next/navigation';
 
-export default function RecipeListItem({ recipe }: { recipe: RecipeListItem }) {
+export default function RecipeListItem({
+  recipe,
+}: {
+  recipe: RecipeListItemType;
+}) {
   const router = useRouter();
   return (
     <Card
       sx={{ display: 'flex', margin: '1rem 0' }}
       onClick={() => {
-        router.push(recipe.slug);
+        router.push(`/recipes/${recipe.id}`);
       }}
     >
       <Box
@@ -23,7 +27,7 @@ export default function RecipeListItem({ recipe }: { recipe: RecipeListItem }) {
         }}
       >
         <Image
-          src={recipe.image}
+          src={recipe.image || ''}
           alt="Recipe image"
           fill
           style={{ objectFit: 'cover' }}

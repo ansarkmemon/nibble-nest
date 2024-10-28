@@ -5,7 +5,7 @@ import { updateRecord } from '@/utils/firestore-utils';
 import { fsDataTypeConverter } from '@/utils/fsDataTypeConverter';
 import { validatePayload } from '@/utils/validators';
 import { UTCDate } from '@date-fns/utc';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(
   req: Request,

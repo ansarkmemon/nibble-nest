@@ -7,6 +7,7 @@ export const Recipe = z.object({
   cookTime: z.string().optional(),
   id: z.string().optional(),
   image: z.string().optional(),
+  images: z.array(z.string()).optional(),
   ingredients: z.array(z.string()).optional(),
   instructions: z.string().optional(),
   name: z.string(),
@@ -19,6 +20,10 @@ export const Recipe = z.object({
   video: z.string({ description: 'Video URL of the recipe' }).optional(),
   authorId: z.string({ description: 'Author ID of the recipe' }).optional(),
   authorName: z.string({ description: 'Author name of the recipe' }).optional(),
+  authorEmail: z
+    .string({ description: 'Author email of the recipe' })
+    .optional(),
+  createdAt: z.union([z.date().optional(), z.number().optional()]),
 });
 
 export type Recipe = z.infer<typeof Recipe>;
@@ -35,6 +40,7 @@ export const RecipeSchema = {
     {
       name: 'ingredients',
       type: 'string[]',
+      facet: true,
       optional: true,
     },
     {

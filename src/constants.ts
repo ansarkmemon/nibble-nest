@@ -1,4 +1,7 @@
-import type { RecipeListItem } from './types/recipeListItem';
+import type {
+  RecipeListItem,
+  RecipeListItemType,
+} from './types/recipeListItem';
 
 export const FOOD_CATEGORIES = [
   {
@@ -53,7 +56,7 @@ export const FOOD_CATEGORIES = [
   },
 ];
 
-export const RECIPES_LIST: RecipeListItem[] = [
+export const RECIPES_LIST: RecipeListItemType[] = [
   {
     name: 'Pasta Carbonara',
     image: '/images/recipes/recipe_pasta_carbonara.jpg',
@@ -74,4 +77,11 @@ export const RECIPES_LIST: RecipeListItem[] = [
     image: '/images/recipes/recipe_croissant_egg_boats.jpg',
     category: ['Breakfast'],
   },
+];
+
+export const FORM_STEPS = [
+  'Basic Info',
+  'Ingredients',
+  'Instructions',
+  'Media',
 ];
