@@ -1,9 +1,15 @@
 'use client';
-import { createTheme } from '@mui/material/styles';
+import { createTheme, PaletteOptions } from '@mui/material/styles';
 
-const theme = createTheme({
+let theme = createTheme({
   typography: {
     fontFamily: 'var(--font-roboto)',
+  },
+});
+
+theme = createTheme(theme, {
+  palette: {
+    black: theme.palette.augmentColor({ color: { main: '#000' } }),
   },
 });
 

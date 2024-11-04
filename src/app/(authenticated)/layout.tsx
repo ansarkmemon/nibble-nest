@@ -1,9 +1,9 @@
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import type { Metadata } from 'next';
-import './globals.css';
+import '../globals.css';
 import { Roboto } from 'next/font/google';
 import { ThemeProvider } from '@mui/material/styles';
-import theme from '../theme';
+import theme from '../../theme';
 import { MobileNav } from '@/components/MobileNav';
 import { Container } from '@mui/material';
 import { UserProvider } from '@auth0/nextjs-auth0/client';
@@ -31,7 +31,11 @@ export default function RootLayout({
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <UserProvider>
-              <Container sx={{ padding: '1rem 0' }}>{children}</Container>
+              <Container
+                sx={{ backgroundColor: '#F2F3F2', padding: '10px 15px' }}
+              >
+                {children}
+              </Container>
               <MobileNav />
             </UserProvider>
           </ThemeProvider>
